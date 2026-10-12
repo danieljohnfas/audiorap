@@ -115,8 +115,8 @@ export default function ExtractionResult({ coverUrl, spectrogramUrl, metadata, i
               <Activity size={20} /> Spectrogram
             </h3>
             {spectrogramUrl && (
-              <a href={spectrogramUrl} download={`${baseName} - Spectrogram.png`} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
-                <Download size={16} /> Save
+              <a href={spectrogramUrl} download={`${baseName} - Spectrogram.png`} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <Download size={16} /> Download Spectrogram (PNG)
               </a>
             )}
           </div>
