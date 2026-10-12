@@ -4,7 +4,7 @@ import Dropzone from './components/Dropzone';
 import ExtractionResult from './components/ExtractionResult';
 import { extractCoverArt } from './utils/audioParser';
 import { generateSpectrogram } from './utils/spectrogram';
-import AdsterraAd from './components/AdsterraAd';
+import GearLinks from './components/GearLinks';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import classNames from 'classnames';
@@ -70,9 +70,6 @@ function App() {
   };
 
   const downloadZip = async (filter) => {
-    // Trigger the Direct Link Ad popunder
-    window.open('https://www.effectivecpmnetwork.com/dg60nttkd?key=46dd74e7d247e320b22018829e5ca1e1', '_blank');
-
     const zip = new JSZip();
     let hasFiles = false;
 
@@ -116,12 +113,7 @@ function App() {
   const hasCompletedResults = results.some(r => !r.isProcessing && !r.error && (r.coverUrl || r.spectrogramUrl));
 
   return (
-    <div className="ad-layout">
-      {/* Left Skyscraper */}
-      <div className="side-ad">
-        <AdsterraAd adKey="91becf40babeaf6b9d039dca2e3ad294" width={160} height={600} />
-      </div>
-
+    <div className="page-layout">
       <div className="app-container flex-col items-center">
         <header className="flex justify-between items-center w-full mb-8">
         <div className="flex items-center gap-4">
@@ -137,15 +129,6 @@ function App() {
 
       <main className="w-full max-w-3xl flex-col gap-8">
         <div className="glass-card mb-8">
-          {/* Top Banner Desktop */}
-          <div className="top-ad-desktop" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <AdsterraAd adKey="65d7a13279c4b33e322a76c47edad635" width={728} height={90} />
-          </div>
-          {/* Top Banner Mobile */}
-          <div className="top-ad-mobile" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <AdsterraAd adKey="cd7397d9fc1585121e25989f8410961c" width={320} height={50} />
-          </div>
-
           <h2 className="mb-4 text-center">Extract Magic from Your Music</h2>
           <p className="text-secondary text-center mb-8">
             Instantly extract hidden cover art and visualize spectrograms from your audio files.
@@ -172,11 +155,6 @@ function App() {
                {error}
              </div>
           )}
-
-          {/* Under Dropzone Ad */}
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-            <AdsterraAd adKey="389e7b55e5984522ce2a36addcc75c88" width={300} height={250} />
-          </div>
         </div>
 
         {hasCompletedResults && (
@@ -217,13 +195,16 @@ function App() {
             )}
           </div>
         ))}
+
+        <GearLinks />
       </main>
 
-      </div>
-
-      {/* Right Skyscraper */}
-      <div className="side-ad">
-        <AdsterraAd adKey="91becf40babeaf6b9d039dca2e3ad294" width={160} height={600} />
+      <footer className="site-footer">
+        More free tools:{' '}
+        <a href="https://photosplitstudio.com/?utm_source=audiorap.com&utm_medium=referral">PhotoSplit Studio</a> (split scanned photos)
+        {' · '}
+        <a href="https://is-my-internet-working.com/?utm_source=audiorap.com&utm_medium=referral">Is My Internet Working?</a> (speed test)
+      </footer>
       </div>
     </div>
   );

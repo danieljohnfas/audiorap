@@ -7,10 +7,6 @@ export default function ExtractionResult({ coverUrl, spectrogramUrl, metadata, i
     ? `${metadata.artist ? metadata.artist + ' - ' : ''}${metadata.title}`
     : (fileName ? fileName.replace(/\.[^/.]+$/, "") : "audio");
 
-  const triggerAd = () => {
-    window.open('https://www.effectivecpmnetwork.com/dg60nttkd?key=46dd74e7d247e320b22018829e5ca1e1', '_blank');
-  };
-
   return (
     <div className="flex-col gap-8 w-full" style={{ animation: 'fadeIn 0.5s ease' }}>
       <style>{`
@@ -94,7 +90,7 @@ export default function ExtractionResult({ coverUrl, spectrogramUrl, metadata, i
               <ImageIcon size={20} /> Cover Art
             </h3>
             {coverUrl && (
-              <a href={coverUrl} download={`${baseName} - Cover.png`} onClick={triggerAd} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
+              <a href={coverUrl} download={`${baseName} - Cover.png`} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
                 <Download size={16} /> Save
               </a>
             )}
@@ -119,7 +115,7 @@ export default function ExtractionResult({ coverUrl, spectrogramUrl, metadata, i
               <Activity size={20} /> Spectrogram
             </h3>
             {spectrogramUrl && (
-              <a href={spectrogramUrl} download={`${baseName} - Spectrogram.png`} onClick={triggerAd} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
+              <a href={spectrogramUrl} download={`${baseName} - Spectrogram.png`} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
                 <Download size={16} /> Save
               </a>
             )}

@@ -149,32 +149,20 @@ body {
 .w-full { width: 100%; }
 .text-center { text-align: center; }
 
-/* Adsterra Integrations */
-.ad-layout {
+/* Page layout */
+.page-layout {
   display: flex;
   justify-content: center;
   width: 100%;
   min-height: 100vh;
 }
 
-.side-ad {
-  display: none;
-}
-@media (min-width: 1280px) {
-  .side-ad {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 1rem;
-    width: 200px;
-    position: sticky;
-    top: 2rem;
-    height: calc(100vh - 4rem);
-  }
-}
+/* Affiliate gear links */
+.gear-links { margin-top: 1rem; }
+.gear-links ul { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 0.75rem 0; }
+.gear-links a { display: inline-block; padding: 0.4rem 0.9rem; border-radius: 999px; border: var(--glass-border); color: var(--text-primary); text-decoration: none; }
+.gear-links a:hover { border-color: var(--accent-color); }
+.gear-links small { color: var(--text-secondary); }
 
-.top-ad-mobile { display: none !important; }
-@media (max-width: 768px) {
-  .top-ad-desktop { display: none !important; }
-  .top-ad-mobile { display: flex !important; justify-content: center; width: 100%; margin-bottom: 2rem; }
-}
+.site-footer { text-align: center; color: var(--text-secondary); padding: 2rem 1rem 3rem; font-size: 0.9rem; }
+.site-footer a { color: var(--accent-color); }
