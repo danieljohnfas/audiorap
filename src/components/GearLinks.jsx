@@ -67,11 +67,11 @@ export function sendAudioRapAdEvent(payload) {
       ...payload,
     });
     if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
-      navigator.sendBeacon(CENTRAL_ENGINE, new Blob([body], { type: 'application/json' }));
+      navigator.sendBeacon(CENTRAL_ENGINE, new Blob([body], { type: 'text/plain;charset=UTF-8' }));
     } else {
       fetch(CENTRAL_ENGINE, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
         body,
         keepalive: true,
       }).catch(() => {});
