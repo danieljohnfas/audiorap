@@ -197,6 +197,35 @@ function App() {
         ))}
 
         <GearLinks />
+
+        <section className="glass-card" style={{ marginTop: '2rem', padding: '1.75rem' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: '700', marginBottom: '0.75rem' }}>
+            Free Online Audio Cover Art Extractor &amp; Spectrogram Analyzer
+          </h2>
+          <p className="text-secondary" style={{ marginBottom: '1rem', lineHeight: 1.6 }}>
+            <strong>AudioRap</strong> lets DJs, audiophiles, music producers, and collectors extract original high-resolution embedded album artwork (ID3v2, Vorbis comments, MP4 atoms) and render detailed FFT frequency spectrograms from <strong>MP3, FLAC, WAV, M4A, and OGG</strong> audio files directly in the browser—with zero server uploads.
+          </p>
+          <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginBottom: '1.25rem' }}>
+            <div>
+              <h3 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '0.35rem' }}>1. Extract Embedded Album Art</h3>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: 1.5 }}>
+                Pull full-resolution JPEG/PNG cover art from MP3 ID3 tags and FLAC picture blocks without re-compression, or auto-fetch missing artwork online.
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '0.35rem' }}>2. Verify True Lossless Audio</h3>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: 1.5 }}>
+                Spot fake FLAC transcodes and upscaled MP3s immediately. Check whether high frequencies extend past 20 kHz (lossless/320kbps) or cut off at 16 kHz (128kbps).
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '0.35rem' }}>3. Batch ZIP Download</h3>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: 1.5 }}>
+                Drop an entire album folder at once and export all extracted covers, all frequency spectrograms, or both in a single organized ZIP archive.
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="site-footer">

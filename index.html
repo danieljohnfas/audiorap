@@ -4,18 +4,73 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AudioRap - Extract Cover Art and Spectrograms from Audio Files</title>
-    <meta name="description" content="Free online tool to extract embedded album cover art, metadata, and generate high-resolution audio spectrograms from MP3, FLAC, and WAV files." />
+    <title>AudioRap — Free MP3 &amp; FLAC Cover Art Extractor &amp; Online Audio Spectrogram Generator</title>
+    <meta name="description" content="Extract embedded album artwork (ID3/Vorbis tags) and generate high-resolution audio spectrograms from MP3, FLAC, WAV, and M4A files online for free. Verify true 320kbps &amp; lossless audio quality 100% locally in your browser." />
     <link rel="canonical" href="https://audiorap.com/" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="AudioRap - Extract Cover Art and Spectrograms" />
-    <meta property="og:description" content="Free online tool to extract embedded album cover art, metadata, and generate high-resolution audio spectrograms from MP3, FLAC, and WAV files." />
+    <meta property="og:title" content="AudioRap — Free MP3 &amp; FLAC Cover Art Extractor &amp; Audio Spectrogram Generator" />
+    <meta property="og:description" content="Extract embedded album cover art, inspect ID3 metadata, and generate high-resolution audio spectrograms from MP3, FLAC, and WAV files in your browser." />
     <meta property="og:url" content="https://audiorap.com/" />
     <meta property="og:site_name" content="AudioRap" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="AudioRap - Extract Cover Art and Spectrograms" />
-    <meta name="twitter:description" content="Free online tool to extract embedded album cover art, metadata, and generate high-resolution audio spectrograms from MP3, FLAC, and WAV files." />
+    <meta name="twitter:title" content="AudioRap — Free MP3 &amp; FLAC Cover Art Extractor &amp; Audio Spectrogram Generator" />
+    <meta name="twitter:description" content="Extract embedded album cover art, metadata, and generate high-resolution audio spectrograms from MP3, FLAC, and WAV files." />
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "AudioRap",
+          "url": "https://audiorap.com/",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "All",
+          "description": "Free browser-based audio cover art extractor, ID3 metadata viewer, and high-resolution audio spectrogram generator for MP3, FLAC, WAV, M4A, and OGG files.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "Extract embedded album artwork from MP3 (ID3v2 APIC), FLAC (METADATA_block_picture), M4A, and OGG files",
+            "Generate high-resolution frequency spectrograms up to 22 kHz to verify true lossless FLAC, WAV, and 320kbps MP3 quality",
+            "Automatic online album cover lookup fallback when embedded artwork is missing",
+            "Batch drag-and-drop processing with one-click ZIP export for covers and spectrograms",
+            "100% private client-side Web Audio API processing — audio files never leave your device"
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I extract cover art from an MP3 or FLAC file?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Drag and drop your MP3, FLAC, M4A, or WAV file into AudioRap. It immediately reads the embedded ID3v2 or Vorbis picture frame in your browser and lets you download the original uncompressed PNG or JPEG album cover."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I check if a FLAC or 320kbps MP3 is real using a spectrogram?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "AudioRap generates a full-frequency spectrogram for every dropped track. Genuine lossless FLAC/WAV files show frequency content extending past 20–22 kHz, true 320kbps MP3s cut off cleanly around 20 kHz, and low-bitrate 128kbps transcodes show a hard shelf cutoff at 16 kHz."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are my audio files uploaded to a server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. All tag parsing and FFT spectrogram rendering happen 100% locally in your browser using JavaScript and the Web Audio API."
+              }
+            }
+          ]
+        }
+      ]
+    </script>
   </head>
   <body>
     <div id="root"></div>

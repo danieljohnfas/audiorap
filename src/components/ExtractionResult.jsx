@@ -1,4 +1,5 @@
-import { Download, Image as ImageIcon, Activity, Disc } from 'lucide-react';
+import { Download, Image as ImageIcon, Activity, Disc, Headphones, ExternalLink } from 'lucide-react';
+import { sendAudioRapAdEvent } from './GearLinks';
 
 export default function ExtractionResult({ coverUrl, spectrogramUrl, metadata, isProcessing, fileName }) {
   if (isProcessing) return null;
@@ -131,6 +132,56 @@ export default function ExtractionResult({ coverUrl, spectrogramUrl, metadata, i
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Post-Extraction Studio Monitoring Callout (Amazon Associates photoid03-20) */}
+      <div
+        style={{
+          marginTop: '1.25rem',
+          padding: '1rem 1.25rem',
+          borderRadius: '12px',
+          border: '1px solid rgba(99, 102, 241, 0.35)',
+          background: 'rgba(99, 102, 241, 0.08)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <Headphones size={24} style={{ color: '#818cf8', flexShrink: 0 }} />
+          <div>
+            <strong style={{ display: 'block', fontSize: '0.95rem' }}>
+              Inspecting "{baseName}"? Hear every frequency above 16 kHz clearly
+            </strong>
+            <span style={{ fontSize: '0.82rem', opacity: 0.8 }}>
+              Compare studio monitor headphones &amp; 24-bit/192kHz USB DACs on Amazon (Associate ID: photoid03-20).
+            </span>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+          <a
+            href="https://www.amazon.com/s?k=Audio-Technica+ATH-M50x+professional+studio+monitor+headphones&tag=photoid03-20"
+            target="_blank"
+            rel="sponsored nofollow noopener"
+            onClick={() => sendAudioRapAdEvent({ type: 'click', slot: 'post-extraction', productId: 'ar-active-1' })}
+            className="btn-primary"
+            style={{ padding: '0.45rem 0.9rem', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '5px', textDecoration: 'none' }}
+          >
+            ATH-M50x Headphones <ExternalLink size={14} />
+          </a>
+          <a
+            href="https://www.amazon.com/s?k=Focusrite+Scarlett+2i2+4th+Gen+USB+audio+interface&tag=photoid03-20"
+            target="_blank"
+            rel="sponsored nofollow noopener"
+            onClick={() => sendAudioRapAdEvent({ type: 'click', slot: 'post-extraction', productId: 'ar-active-2' })}
+            className="btn-primary"
+            style={{ padding: '0.45rem 0.9rem', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '5px', textDecoration: 'none' }}
+          >
+            Scarlett 2i2 DAC <ExternalLink size={14} />
+          </a>
         </div>
       </div>
     </div>

@@ -1,0 +1,14 @@
+{
+  "name": "audiorap",
+  "account_id": "9213ae688946caea617ba6fd5e4fbc5c",
+  "compatibility_date": "2026-09-01",
+  "observability": {
+    "enabled": true
+  },
+  "build": {
+    "command": "npm run build"
+  },
+  "assets": {
+    "directory": "./dist"
+  }
+}
