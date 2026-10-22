@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Headphones, Mic, Sliders, ExternalLink } from 'lucide-react';
 
 const AMAZON_TAG = 'photoid03-20';
-const CENTRAL_ENGINE = 'https://akilibrain.com/api/amazon-ads';
+const CENTRAL_ENGINE = 'https://tiketichap.com/api/amazon-ads';
 
 const amazonSearch = (query) =>
   `https://www.amazon.com/s?k=${encodeURIComponent(query)}&tag=${AMAZON_TAG}`;
@@ -67,9 +67,9 @@ export function sendAudioRapAdEvent(payload) {
       ...payload,
     });
     if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
-      navigator.sendBeacon(`${CENTRAL_ENGINE}/event`, new Blob([body], { type: 'application/json' }));
+      navigator.sendBeacon(CENTRAL_ENGINE, new Blob([body], { type: 'application/json' }));
     } else {
-      fetch(`${CENTRAL_ENGINE}/event`, {
+      fetch(CENTRAL_ENGINE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body,
@@ -89,7 +89,7 @@ export default function GearLinks() {
     sendAudioRapAdEvent({ type: 'pageview' });
     sendAudioRapAdEvent({ type: 'impression', slot: 'studio-showcase' });
 
-    fetch(`${CENTRAL_ENGINE}/serve?site=audiorap&slot=studio-showcase&limit=6`)
+    fetch(`${CENTRAL_ENGINE}?action=serve&site=audiorap&slot=studio-showcase&limit=6`)
       .then((r) => r.json())
       .then((data) => {
         if (data && data.allowed && Array.isArray(data.products) && data.products.length >= 3) {
