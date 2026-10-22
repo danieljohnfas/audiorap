@@ -186,6 +186,7 @@ function App() {
               </div>
             ) : (
               <ExtractionResult 
+                file={result.file}
                 coverUrl={result.coverUrl} 
                 spectrogramUrl={result.spectrogramUrl} 
                 metadata={result.metadata || { title: result.file.name, artist: 'Processing...' }}
