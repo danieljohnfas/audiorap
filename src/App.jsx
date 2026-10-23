@@ -7,7 +7,6 @@ import { generateSpectrogram } from './utils/spectrogram';
 import GearLinks from './components/GearLinks';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import classNames from 'classnames';
 
 function App() {
   const [theme, setTheme] = useState('light');

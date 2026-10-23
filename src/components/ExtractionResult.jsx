@@ -1,14 +1,8 @@
 import { useMemo } from 'react';
-import { Download, Image as ImageIcon, Activity, Disc, Headphones, ExternalLink, Play, CheckCircle2, AlertTriangle, ShieldCheck } from 'lucide-react';
-import { sendAudioRapAdEvent } from './GearLinks';
+import { Download, Image as ImageIcon, Activity, Disc, Headphones, ExternalLink, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { sendAudioRapAdEvent } from '../utils/adTracker';
 
 export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metadata, isProcessing, fileName }) {
-  if (isProcessing) return null;
-
-  const baseName = metadata?.title 
-    ? `${metadata.artist ? metadata.artist + ' - ' : ''}${metadata.title}`
-    : (fileName ? fileName.replace(/\.[^/.]+$/, "") : "audio");
-
   const audioPreviewUrl = useMemo(() => {
     if (file instanceof Blob || file instanceof File) {
       try {
@@ -19,6 +13,12 @@ export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metad
     }
     return null;
   }, [file]);
+
+  if (isProcessing) return null;
+
+  const baseName = metadata?.title 
+    ? `${metadata.artist ? metadata.artist + ' - ' : ''}${metadata.title}`
+    : (fileName ? fileName.replace(/\.[^/.]+$/, "") : "audio");
 
   const ext = (fileName || '').split('.').pop()?.toLowerCase() || '';
   const isLossless = ['flac', 'wav', 'aiff', 'alac'].includes(ext);

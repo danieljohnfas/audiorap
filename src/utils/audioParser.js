@@ -16,7 +16,7 @@ async function fetchOnlineCoverArt(title, artist) {
 }
 
 export function extractCoverArt(file, useOnlineFetch = false) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     jsmediatags.read(file, {
       onSuccess: async function(tag) {
         const tags = tag.tags;
