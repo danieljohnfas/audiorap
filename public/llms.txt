@@ -1,0 +1,14 @@
+# AudioRap — Album Cover Art Extractor & Audio Spectrogram Analyzer
+> https://audiorap.com
+
+AudioRap is a free, private, client-side web application for music producers, audio archivists, and audiophiles. It extracts embedded high-resolution album cover art from digital audio files and renders deep-frequency audio spectrograms to verify genuine lossless FLAC/WAV audio quality versus fake upsampled 128kbps/320kbps MP3 transcodes.
+
+## Core Capabilities
+- **Album Cover Art Extraction**: Decodes embedded ID3v2 APIC, Vorbis METADATA_BLOCK_PICTURE, and MP4 cover art from MP3, FLAC, WAV, M4A, and OGG tracks without compression loss.
+- **Audio Spectrogram Generation**: Full-resolution frequency analysis up to 22.05 kHz using the Web Audio API. Instantly reveals high-frequency shelf cutoffs characteristic of lossy MP3 compression.
+- **Batch Processing**: Drag-and-drop multiple tracks for rapid inspection and single-click ZIP export.
+- **100% Client-Side Privacy**: All decoding and spectrogram rendering executes locally in the browser — audio never leaves the user's computer.
+- **Studio Monitoring Gear**: Curated reference monitors, studio headphones, and USB audio interfaces for producers and engineers.
+
+## Key URLs
+- Homepage & Audio Tool: https://audiorap.com/
