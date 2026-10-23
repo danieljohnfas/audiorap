@@ -198,6 +198,7 @@ export default function GearLinks() {
                 type: 'click',
                 slot: 'studio-showcase',
                 productId: g.id,
+                asin: g.asin,
               })
             }
             style={{
