@@ -19,8 +19,6 @@ export function generateSpectrogram(file) {
         analyser.fftSize = 2048;
         analyser.smoothingTimeConstant = 0;
         
-        // Create a ScriptProcessorNode to capture FFT data
-        // We need a chunk size to process. Let's use 4096.
         const processor = offlineCtx.createScriptProcessor(4096, 1, 1);
         
         source.connect(analyser);
@@ -32,14 +30,12 @@ export function generateSpectrogram(file) {
         
         processor.onaudioprocess = () => {
           analyser.getByteFrequencyData(frequencies);
-          // Store a copy of the frequencies array
           spectrogramData.push(new Uint8Array(frequencies));
         };
         
         source.start(0);
         await offlineCtx.startRendering();
         
-        // Now draw to a canvas
         const width = spectrogramData.length;
         const height = analyser.frequencyBinCount;
         
@@ -47,27 +43,64 @@ export function generateSpectrogram(file) {
           throw new Error('Could not generate spectrogram data.');
         }
 
+        // --- Algorithmic FFT Frequency Shelf & Transcode Analyzer ---
+        const activeFrames = spectrogramData.filter(col => {
+          let sum = 0;
+          const sampleCount = Math.min(col.length, 250);
+          for (let i = 0; i < sampleCount; i++) sum += col[i];
+          return sum / sampleCount > 12;
+        });
+
+        const framesToExamine = activeFrames.length > 15 ? activeFrames : spectrogramData;
+        const binEnergies = new Float32Array(height);
+        for (const col of framesToExamine) {
+          for (let b = 0; b < height; b++) {
+            binEnergies[b] += col[b];
+          }
+        }
+
+        const count = Math.max(1, framesToExamine.length);
+        let maxBinWithSignal = 0;
+        for (let b = 0; b < height; b++) {
+          binEnergies[b] /= count;
+          if (binEnergies[b] >= 5.0) {
+            maxBinWithSignal = b;
+          }
+        }
+
+        const hzPerBin = (audioBuffer.sampleRate / 2) / height;
+        const detectedCutoffHz = Math.min(Math.round(maxBinWithSignal * hzPerBin), Math.round(audioBuffer.sampleRate / 2));
+        
+        const ext = (file.name || '').split('.').pop()?.toLowerCase() || '';
+        const claimsLossless = ['flac', 'wav', 'aiff', 'alac'].includes(ext);
+        const isFakeUpscale = claimsLossless && detectedCutoffHz < 17000;
+
+        let shelfTier = 'master';
+        if (detectedCutoffHz >= 21000) {
+          shelfTier = 'master';
+        } else if (detectedCutoffHz >= 19500) {
+          shelfTier = '320kbps';
+        } else if (detectedCutoffHz >= 17500) {
+          shelfTier = '192kbps';
+        } else {
+          shelfTier = '128kbps';
+        }
+        // -------------------------------------------------------------
+
         const canvas = document.createElement('canvas');
         canvas.width = width;
-        // Limit height to a reasonable number to avoid huge canvases
         const displayHeight = Math.min(height, 512); 
         canvas.height = displayHeight;
         
         const ctx = canvas.getContext('2d');
-        
-        // Create ImageData to draw pixels efficiently
         const imgData = ctx.createImageData(width, displayHeight);
         
         for (let x = 0; x < width; x++) {
           const colData = spectrogramData[x];
           for (let y = 0; y < displayHeight; y++) {
-            // Web Audio API frequencies go from low to high. Canvas y=0 is top.
-            // So we invert the y axis to put low frequencies at the bottom.
             const freqVal = colData[y];
             const i = ((displayHeight - 1 - y) * width + x) * 4;
             
-            // Map freqVal (0-255) to a color (e.g. heatmap)
-            // Using a simple blue-purple-pink-white gradient
             const r = freqVal;
             const g = Math.max(0, freqVal - 100);
             const b = Math.min(255, freqVal + 50);
@@ -75,13 +108,20 @@ export function generateSpectrogram(file) {
             imgData.data[i] = r;
             imgData.data[i + 1] = g;
             imgData.data[i + 2] = b;
-            imgData.data[i + 3] = 255; // Alpha
+            imgData.data[i + 3] = 255;
           }
         }
         
         ctx.putImageData(imgData, 0, 0);
         const dataUrl = canvas.toDataURL('image/png');
-        resolve(dataUrl);
+        
+        resolve({
+          dataUrl,
+          detectedCutoffHz,
+          shelfTier,
+          isFakeUpscale,
+          sampleRate: audioBuffer.sampleRate,
+        });
         
       } catch (err) {
         console.error('Error generating spectrogram:', err);

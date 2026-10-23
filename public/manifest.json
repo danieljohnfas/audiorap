@@ -1,0 +1,16 @@
+{
+  "name": "AudioRap — Audio Metadata & Spectrogram Studio",
+  "short_name": "AudioRap",
+  "description": "Extract embedded cover art, inspect audio metadata, and analyze true lossless vs transcode frequency spectrums offline in browser.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

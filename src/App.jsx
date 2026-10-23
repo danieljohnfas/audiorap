@@ -49,11 +49,13 @@ function App() {
             : r
         ));
 
-        const specUrl = await generateSpectrogram(item.file);
+        const specResult = await generateSpectrogram(item.file);
+        const specUrl = typeof specResult === 'object' ? specResult.dataUrl : specResult;
+        const analysis = typeof specResult === 'object' ? specResult : null;
         
         setResults(prev => prev.map(r => 
           r.id === item.id 
-            ? { ...r, spectrogramUrl: specUrl, isProcessing: false } 
+            ? { ...r, spectrogramUrl: specUrl, spectrumAnalysis: analysis, isProcessing: false } 
             : r
         ));
       } catch (err) {
@@ -191,6 +193,7 @@ function App() {
                 metadata={result.metadata || { title: result.file.name, artist: 'Processing...' }}
                 isProcessing={result.isProcessing}
                 fileName={result.file.name}
+                spectrumAnalysis={result.spectrumAnalysis}
               />
             )}
           </div>

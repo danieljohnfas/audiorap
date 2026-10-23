@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { Download, Image as ImageIcon, Activity, Disc, Headphones, ExternalLink, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Download, Image as ImageIcon, Activity, Disc, Headphones, ExternalLink, CheckCircle2, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { sendAudioRapAdEvent } from '../utils/adTracker';
 
-export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metadata, isProcessing, fileName }) {
+export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metadata, isProcessing, fileName, spectrumAnalysis }) {
   const audioPreviewUrl = useMemo(() => {
     if (file instanceof Blob || file instanceof File) {
       try {
@@ -108,7 +108,19 @@ export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metad
             ) : null}
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.82rem', fontWeight: 600 }}>
-              {isLossless ? (
+              {spectrumAnalysis?.isFakeUpscale ? (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#ef4444', background: 'rgba(239, 68, 68, 0.15)', padding: '0.25rem 0.75rem', borderRadius: '999px', border: '1px solid rgba(239, 68, 68, 0.4)' }}>
+                  <AlertTriangle size={14} /> ⚠️ Fake Lossless Alert: Brickwall Cutoff at {(spectrumAnalysis.detectedCutoffHz / 1000).toFixed(1)} kHz (~128 kbps source)
+                </span>
+              ) : spectrumAnalysis?.detectedCutoffHz >= 21000 ? (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#34d399', background: 'rgba(52, 211, 153, 0.12)', padding: '0.25rem 0.65rem', borderRadius: '999px', border: '1px solid rgba(52, 211, 153, 0.25)' }}>
+                  <CheckCircle2 size={14} /> Verified Master: {(spectrumAnalysis.detectedCutoffHz / 1000).toFixed(1)} kHz Full Bandwidth ({ext.toUpperCase()})
+                </span>
+              ) : spectrumAnalysis?.detectedCutoffHz ? (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#fbbf24', background: 'rgba(251, 191, 36, 0.12)', padding: '0.25rem 0.65rem', borderRadius: '999px', border: '1px solid rgba(251, 191, 36, 0.25)' }}>
+                  <ShieldCheck size={14} /> {(spectrumAnalysis.detectedCutoffHz / 1000).toFixed(1)} kHz Shelf Limit ({ext.toUpperCase()})
+                </span>
+              ) : isLossless ? (
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#34d399', background: 'rgba(52, 211, 153, 0.12)', padding: '0.25rem 0.65rem', borderRadius: '999px', border: '1px solid rgba(52, 211, 153, 0.25)' }}>
                   <CheckCircle2 size={14} /> True Lossless ({ext.toUpperCase()}) • Full 22 kHz Spectrum
                 </span>
