@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Download, Image as ImageIcon, Activity, Disc, Headphones, ExternalLink, CheckCircle2, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { sendAudioRapAdEvent } from '../utils/adTracker';
+import TranscriptViewer from './TranscriptViewer';
 
 export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metadata, isProcessing, fileName, spectrumAnalysis }) {
   const audioPreviewUrl = useMemo(() => {
@@ -189,6 +190,9 @@ export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metad
           </div>
         </div>
       </div>
+
+      {/* Microsoft VibeVoice ASR Transcription & Speaker Diarization */}
+      <TranscriptViewer file={file} />
 
       {/* Post-Extraction Studio Monitoring Callout (Amazon Associates photoid03-20) */}
       <div
