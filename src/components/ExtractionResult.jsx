@@ -163,6 +163,12 @@ export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metad
               </div>
             )}
           </div>
+          {coverUrl && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 0.75rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.78rem' }}>
+              <span style={{ color: '#34d399', fontWeight: 600 }}>✓ Spotify / Apple Music / Boomplay Standard</span>
+              <span style={{ color: 'var(--text-secondary)' }}>Target: 3000×3000px RGB</span>
+            </div>
+          )}
         </div>
 
         {/* Spectrogram */}
@@ -178,9 +184,23 @@ export default function ExtractionResult({ file, coverUrl, spectrogramUrl, metad
             )}
           </div>
           
-          <div className="spectrogram-container">
+          <div className="spectrogram-container" style={{ position: 'relative' }}>
             {spectrogramUrl ? (
-              <img src={spectrogramUrl} alt="Spectrogram" />
+              <>
+                <img src={spectrogramUrl} alt="Spectrogram" />
+                {/* Frequency Shelf Reference Lines (16 kHz, 19 kHz, 20+ kHz) */}
+                <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+                  <div style={{ position: 'absolute', top: '8%', left: 0, right: 0, borderTop: '1px dashed rgba(52, 211, 153, 0.75)', display: 'flex', justifyContent: 'flex-end', paddingRight: '8px' }}>
+                    <span style={{ fontSize: '9px', fontWeight: 'bold', background: 'rgba(0,0,0,0.85)', color: '#34d399', padding: '1px 5px', borderRadius: '3px', transform: 'translateY(-50%)' }}>20 kHz • True 320k / Lossless</span>
+                  </div>
+                  <div style={{ position: 'absolute', top: '18%', left: 0, right: 0, borderTop: '1px dashed rgba(251, 191, 36, 0.75)', display: 'flex', justifyContent: 'flex-end', paddingRight: '8px' }}>
+                    <span style={{ fontSize: '9px', fontWeight: 'bold', background: 'rgba(0,0,0,0.85)', color: '#fbbf24', padding: '1px 5px', borderRadius: '3px', transform: 'translateY(-50%)' }}>19 kHz • 192 kbps Shelf</span>
+                  </div>
+                  <div style={{ position: 'absolute', top: '30%', left: 0, right: 0, borderTop: '1px dashed rgba(239, 68, 68, 0.75)', display: 'flex', justifyContent: 'flex-end', paddingRight: '8px' }}>
+                    <span style={{ fontSize: '9px', fontWeight: 'bold', background: 'rgba(0,0,0,0.85)', color: '#ef4444', padding: '1px 5px', borderRadius: '3px', transform: 'translateY(-50%)' }}>16 kHz • 128 kbps Cutoff</span>
+                  </div>
+                </div>
+              </>
             ) : (
               <div className="placeholder">
                 <Activity size={48} className="mb-4" style={{ opacity: 0.5 }} />

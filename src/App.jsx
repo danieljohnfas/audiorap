@@ -70,6 +70,56 @@ function App() {
     setIsProcessing(false);
   };
 
+  
+  const loadDemoTrack = () => {
+    try {
+      const sampleRate = 44100;
+      const duration = 1.2;
+      const numSamples = Math.floor(sampleRate * duration);
+      const buffer = new ArrayBuffer(44 + numSamples * 2);
+      const view = new DataView(buffer);
+
+      const writeString = (offset, string) => {
+        for (let i = 0; i < string.length; i++) {
+          view.setUint8(offset + i, string.charCodeAt(i));
+        }
+      };
+      writeString(0, 'RIFF');
+      view.setUint32(4, 36 + numSamples * 2, true);
+      writeString(8, 'WAVE');
+      writeString(12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true); // PCM
+      view.setUint16(22, 1, true); // Mono
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true);
+      view.setUint16(32, 2, true);
+      view.setUint16(34, 16, true);
+      writeString(36, 'data');
+      view.setUint32(40, numSamples * 2, true);
+
+      // Chords + high-frequency harmonics up to 21.5 kHz
+      for (let i = 0; i < numSamples; i++) {
+        const t = i / sampleRate;
+        const sample = (
+          0.35 * Math.sin(2 * Math.PI * 440 * t) +
+          0.25 * Math.sin(2 * Math.PI * 880 * t) +
+          0.15 * Math.sin(2 * Math.PI * 3520 * t) +
+          0.10 * Math.sin(2 * Math.PI * 12000 * t) +
+          0.08 * Math.sin(2 * Math.PI * 18000 * t) +
+          0.06 * Math.sin(2 * Math.PI * 21500 * t)
+        );
+        view.setInt16(44 + i * 2, Math.max(-32768, Math.min(32767, sample * 32767)), true);
+      }
+
+      const blob = new Blob([buffer], { type: 'audio/wav' });
+      const demoFile = new File([blob], 'Sample_Lossless_22kHz_Master.wav', { type: 'audio/wav' });
+      handleFileDrop([demoFile]);
+    } catch (e) {
+      console.error('Demo audio error:', e);
+    }
+  };
+
   const downloadZip = async (filter) => {
     const zip = new JSZip();
     let hasFiles = false;
@@ -123,9 +173,20 @@ function App() {
             AudioRap
           </h1>
         </div>
-        <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle Theme">
-          {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
-        </button>
+        <div className="flex items-center gap-3">
+          <a
+            href="https://buymeacoffee.com/codey"
+            target="_blank"
+            rel="noopener"
+            className="btn-secondary"
+            style={{ padding: '0.45rem 0.9rem', fontSize: '0.85rem', fontWeight: 'bold', background: '#ffdd00', color: '#000', borderRadius: '99px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+          >
+            <span>☕ Buy Me a Coffee</span>
+          </a>
+          <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle Theme">
+            {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+          </button>
+        </div>
       </header>
 
       <main className="w-full max-w-3xl flex-col gap-8">
@@ -149,6 +210,17 @@ function App() {
           </div>
           
           <Dropzone onDrop={handleFileDrop} isProcessing={isProcessing} />
+          
+          <div className="flex justify-center mt-4">
+            <button
+              type="button"
+              onClick={loadDemoTrack}
+              className="btn-secondary"
+              style={{ padding: '0.45rem 1.1rem', fontSize: '0.85rem', fontWeight: '700', borderRadius: '999px', display: 'inline-flex', alignItems: 'center', gap: '6px', cursor: 'pointer', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)' }}
+            >
+              <span>⚡ Try Sample Audio Demo (22 kHz FLAC vs 128 kbps Cutoff)</span>
+            </button>
+          </div>
           
           
           {error && (
