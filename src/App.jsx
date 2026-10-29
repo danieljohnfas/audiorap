@@ -4,7 +4,7 @@ import Dropzone from './components/Dropzone';
 import ExtractionResult from './components/ExtractionResult';
 import { extractCoverArt } from './utils/audioParser';
 import { generateSpectrogram } from './utils/spectrogram';
-import GearLinks from './components/GearLinks';
+import GearLinks, { StudioQuickDeals } from './components/GearLinks';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
@@ -229,6 +229,8 @@ function App() {
              </div>
           )}
         </div>
+
+        <StudioQuickDeals />
 
         {hasCompletedResults && (
           <div className="flex justify-between items-center mb-4 p-4 glass-card" style={{ padding: '1rem', marginBottom: '1rem' }}>
